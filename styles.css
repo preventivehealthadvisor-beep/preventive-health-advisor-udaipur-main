@@ -50,7 +50,8 @@
   --accent: var(--success);
 }
 .theme-moderate-risk {
-  /* Uses :root defaults */
+  /* Uses :root defaults - no custom properties needed */
+  --theme-name: 'moderate-risk';
 }
 .theme-high-risk {
   --primary: #6d28d9; /* Deep Purple */
@@ -564,6 +565,7 @@ h1, h2, h3, h4 {
   background-color: var(--bg-main); border: 1px solid var(--border-color);
   padding: 1rem; font-size: 1rem; border-radius: var(--radius-md); transition: all 0.2s;
   -webkit-appearance: none;
+  appearance: none;
 }
 .form-input:focus {
   border-color: var(--primary); background-color: var(--bg-card);
@@ -613,12 +615,13 @@ h1, h2, h3, h4 {
 .contextual-input-container {
     margin-top: 0.5rem;
     width: 100%;
-    animation: fadeInSmooth 0.3s ease-out;
+    animation: slideDown 0.3s ease-out;
     position: relative;
-    background: var(--bg-main);
-    padding: 0.5rem;
+    background: var(--bg-card);
+    padding: 0.75rem;
     border-radius: var(--radius-md);
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-subtle);
 }
 .contextual-input-container::before {
     content: '';
@@ -633,22 +636,27 @@ h1, h2, h3, h4 {
 .contextual-input-container::after {
     content: '';
     position: absolute;
-    top: -4px;
+    top: -5px;
     left: 50%;
     transform: translateX(-50%);
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-bottom: 5px solid var(--bg-main);
+    border-bottom: 5px solid var(--bg-card);
 }
 .contextual-input-container .form-input {
     border: 1px solid var(--border-color);
-    background: #fff;
+    background: var(--bg-main);
+    margin-top: 0.5rem;
+}
+.contextual-input-container .form-input:focus {
+    background: var(--bg-card);
 }
 
 
 /* Form Slider */
 .form-slider {
   -webkit-appearance: none;
+  appearance: none;
   width: 100%;
   height: 8px;
   background: #e0e0e0;
@@ -763,31 +771,46 @@ h1, h2, h3, h4 {
     border-color: #333 transparent transparent transparent;
 }
 
-/* Segmented Control for Relationships */
+/* Segmented Control for Relationships - 2x2 Grid Layout */
 .segmented-control {
-    display: flex;
-    background: #f0f0f0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 3px;
-    gap: 2px;
-    margin-bottom: 0.5rem;
+    padding: 4px;
+    gap: 3px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    min-height: 80px;
 }
 .segmented-btn {
-    flex: 1;
     border: none;
     background: transparent;
-    padding: 6px 4px;
-    font-size: 0.75rem;
+    padding: 12px 8px;
+    font-size: 0.8rem;
     font-weight: 600;
     color: var(--text-muted);
-    border-radius: var(--radius-sm);
+    border-radius: calc(var(--radius-sm) - 1px);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
+    text-align: center;
+    white-space: nowrap;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.segmented-btn:hover {
+    background: rgba(57, 73, 171, 0.05);
+    color: var(--text-main);
 }
 .segmented-btn.active {
-    background: #fff;
-    color: var(--primary);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    font-weight: 700;
 }
 
 /* Radar Chart (Updated) */
@@ -1247,3 +1270,765 @@ h1, h2, h3, h4 {
 }
 
 
+
+/* Risk Factors Step Responsive Design */
+.risk-factors-step {
+  width: 100%;
+}
+
+.step-header-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.risk-factors-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Section Titles */
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 1rem;
+  font-family: var(--font-display);
+}
+
+/* Radio Section Spacing */
+.radio-section {
+  margin-bottom: 1.5rem;
+}
+
+.radio-section:last-child {
+  margin-bottom: 0;
+}
+
+/* Marble Mining Card Improvements */
+.marble-mining-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+}
+
+.card-content {
+  flex: 1;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+}
+
+.card-description {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.card-toggle {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Family History Section */
+.family-history-section {
+  background: var(--bg-main);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.unsure-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.unsure-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.family-history-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.family-history-fieldset:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Category Summary */
+.category-summary {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  padding: 0.75rem 0;
+  margin-bottom: 0.5rem;
+}
+
+/* Family History Grid */
+.family-history-grid {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+}
+
+/* Personal Conditions Section */
+.personal-conditions-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.personal-conditions-grid {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem;
+}
+
+/* Age Input Styling */
+.age-input {
+  padding: 0.6rem;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 0.5rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+  .risk-factors-container {
+    gap: 1.25rem;
+  }
+  
+  .marble-mining-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+  
+  .card-toggle {
+    align-self: center;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  
+  .unsure-toggle {
+    justify-content: center;
+  }
+  
+  .family-history-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  
+  .personal-conditions-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  
+  .checkbox-label {
+    padding: 0.75rem 0.4rem;
+    font-size: 0.85rem;
+    min-height: 48px;
+  }
+  
+  .contextual-input-container {
+    padding: 0.5rem;
+  }
+  
+  .contextual-input-container .form-input {
+    margin-top: 0.4rem;
+  }
+  
+  .segmented-btn {
+    padding: 6px 3px;
+    font-size: 0.7rem;
+    min-height: 32px;
+  }
+  
+  .age-input {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+  .step-header-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .risk-factors-container {
+    gap: 1rem;
+  }
+  
+  .family-history-section,
+  .personal-conditions-section {
+    padding: 1rem;
+  }
+  
+  .section-title {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .marble-mining-card {
+    padding: 0.875rem;
+  }
+  
+  .card-title {
+    font-size: 1rem;
+  }
+  
+  .card-description {
+    font-size: 0.85rem;
+  }
+  
+  .checkbox-label {
+    padding: 0.6rem 0.3rem;
+    font-size: 0.8rem;
+    min-height: 44px;
+  }
+  
+  .contextual-input-container {
+    padding: 0.4rem;
+  }
+  
+  .contextual-input-container .form-input {
+    margin-top: 0.3rem;
+  }
+  
+  .segmented-control {
+    padding: 2px;
+    gap: 1px;
+  }
+  
+  .segmented-btn {
+    padding: 4px 2px;
+    font-size: 0.65rem;
+    min-height: 28px;
+  }
+}
+
+/* Desktop Enhancements */
+@media (min-width: 1024px) {
+  .risk-factors-container {
+    gap: 2rem;
+  }
+  
+  .marble-mining-card {
+    padding: 1.5rem;
+  }
+  
+  .family-history-section,
+  .personal-conditions-section {
+    padding: 2rem;
+  }
+  
+  .family-history-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+  
+  .personal-conditions-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  
+  .checkbox-label {
+    padding: 1rem 0.75rem;
+    font-size: 0.95rem;
+  }
+  
+  .contextual-input-container {
+    padding: 0.75rem;
+  }
+}
+
+/* Improved Touch Targets for Mobile */
+@media (max-width: 768px) {
+  .info-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 13px;
+  }
+  
+  .info-tooltip {
+    width: 180px;
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+  }
+  
+  /* Better spacing for accordion */
+  .collapsible-section {
+    margin-bottom: 1rem;
+  }
+  
+  .category-summary {
+    padding: 1rem 0;
+    font-size: 1rem;
+  }
+  
+  .accordion-content {
+    padding-top: 0.5rem;
+  }
+}
+
+/* Focus and Accessibility Improvements */
+.checkbox-label:focus-within,
+.radio-label:focus-within {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.segmented-btn:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.age-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-soft);
+}
+
+/* Animation Improvements */
+.contextual-input-container {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 200px;
+  }
+}
+/* Toggle Button Improvements */
+.toggle-button {
+  border: 2px solid var(--border-color);
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 700;
+  font-size: 0.9rem;
+  min-width: 80px;
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.toggle-button:hover {
+  border-color: var(--primary-light);
+  color: var(--text-main);
+}
+
+.toggle-button.selected {
+  border-color: var(--primary);
+  background-color: var(--primary-soft);
+  color: var(--primary);
+  box-shadow: 0 2px 5px rgba(57, 73, 171, 0.15);
+}
+
+.toggle-button:active {
+  transform: scale(0.98);
+}
+
+.toggle-button:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.toggle-text {
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+/* Mobile Toggle Button */
+@media (max-width: 768px) {
+  .toggle-button {
+    min-width: 70px;
+    min-height: 40px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .toggle-button {
+    min-width: 65px;
+    min-height: 38px;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.8rem;
+  }
+}
+/* Additional Mobile Responsive Improvements */
+
+/* Better spacing for form sections on mobile */
+@media (max-width: 768px) {
+  .risk-factor-section {
+    margin-bottom: 1rem;
+  }
+  
+  .risk-factor-section.inset {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Improve radio group spacing */
+  .radio-group {
+    gap: 0.5rem;
+  }
+  
+  /* Better checkbox group layout */
+  .checkbox-group {
+    gap: 0.5rem;
+  }
+  
+  /* Improve form labels */
+  .form-label {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Better step actions on mobile */
+  .step-actions {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+  }
+  
+  .step-actions .btn {
+    width: 100%;
+    min-height: 48px;
+  }
+  
+  .step-actions .btn-link {
+    width: auto;
+    align-self: center;
+    margin: 0;
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* Ultra-small screens */
+@media (max-width: 360px) {
+  .app-container {
+    padding: 1rem 0.25rem;
+  }
+  
+  .content-wrapper {
+    padding: 1rem;
+  }
+  
+  .risk-factors-container {
+    gap: 0.75rem;
+  }
+  
+  .family-history-grid,
+  .personal-conditions-grid {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+  
+  .checkbox-label {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.75rem;
+    min-height: 40px;
+  }
+  
+  .contextual-input-container {
+    padding: 0.25rem;
+  }
+  
+  .segmented-btn {
+    padding: 3px 1px;
+    font-size: 0.6rem;
+    min-height: 24px;
+  }
+  
+  .segmented-control {
+    padding: 1px;
+    gap: 0.5px;
+  }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 768px) and (orientation: landscape) {
+  .step-header-section {
+    margin-bottom: 1rem;
+  }
+  
+  .step-header {
+    font-size: 1.5rem;
+  }
+  
+  .step-subheader {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .risk-factors-container {
+    gap: 1rem;
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .checkbox-label,
+  .radio-label,
+  .toggle-button {
+    border-width: 1px; /* Thinner borders on high DPI */
+  }
+}
+
+/* Improved hover states for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .checkbox-label:hover,
+  .radio-label:hover,
+  .toggle-button:hover {
+    transform: none; /* Remove hover transforms on touch devices */
+  }
+  
+  .checkbox-label:active,
+  .radio-label:active,
+  .toggle-button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Ensure good contrast for accessibility */
+@media (prefers-contrast: high) {
+  .checkbox-label,
+  .radio-label,
+  .toggle-button {
+    border-width: 2px;
+  }
+  
+  .checkbox-label.selected,
+  .radio-label.selected,
+  .toggle-button.selected {
+    border-width: 3px;
+  }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .contextual-input-container {
+    animation: none;
+  }
+  
+  .slideDown {
+    animation: none;
+  }
+  
+  .risk-glow-high,
+  .risk-glow-moderate {
+    animation: none;
+  }
+  
+  .checkbox-label,
+  .radio-label,
+  .toggle-button {
+    transition: none;
+  }
+}
+/* Enhanced Relationship Selector Styling */
+.relationship-selector-wrapper {
+  margin-bottom: 0.5rem;
+}
+
+.relationship-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  display: block;
+}
+
+/* Better visual separation between relationship and age input */
+.contextual-input-container > * + * {
+  margin-top: 0.5rem;
+}
+
+/* Improved focus states for better accessibility */
+.segmented-btn:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+  z-index: 1;
+  position: relative;
+}
+
+.segmented-btn:focus:not(.active) {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+/* Better visual feedback for selected state */
+.segmented-btn.active {
+  transform: none;
+  box-shadow: 
+    0 1px 3px rgba(0,0,0,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+/* Improved mobile touch targets */
+@media (max-width: 768px) {
+  .segmented-control {
+    padding: 3px;
+    gap: 3px;
+    min-height: 76px;
+  }
+  
+  .segmented-btn {
+    min-height: 36px;
+    padding: 10px 6px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .segmented-control {
+    padding: 3px;
+    gap: 2px;
+    min-height: 72px;
+  }
+  
+  .segmented-btn {
+    min-height: 34px;
+    padding: 8px 4px;
+    font-size: 0.7rem;
+  }
+}
+
+/* Ultra-small screens - maintain 2x2 grid but with smaller buttons */
+@media (max-width: 360px) {
+  .segmented-control {
+    padding: 2px;
+    gap: 2px;
+    min-height: 68px;
+  }
+  
+  .segmented-btn {
+    min-height: 32px;
+    padding: 6px 3px;
+    font-size: 0.65rem;
+    font-weight: 700;
+  }
+}
+
+/* Better contrast for high contrast mode */
+@media (prefers-contrast: high) {
+  .segmented-control {
+    border-width: 2px;
+  }
+  
+  .segmented-btn.active {
+    border: 2px solid var(--primary-dark);
+  }
+}
+/* Desktop enhancements for 2x2 relationship grid */
+@media (min-width: 1024px) {
+  .segmented-control {
+    padding: 5px;
+    gap: 4px;
+    max-width: 220px; /* Prevent it from getting too wide */
+    min-height: 90px;
+  }
+  
+  .segmented-btn {
+    min-height: 42px;
+    padding: 14px 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  
+  .segmented-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .segmented-btn.active {
+    box-shadow: 
+      0 2px 6px rgba(0,0,0,0.15),
+      inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+}
+
+/* Tablet specific adjustments */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .segmented-control {
+    padding: 4px;
+    gap: 3px;
+    max-width: 200px;
+    min-height: 84px;
+  }
+  
+  .segmented-btn {
+    min-height: 40px;
+    padding: 12px 8px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Better visual feedback for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .segmented-btn:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+  
+  .segmented-btn:hover {
+    transform: none; /* Remove hover transforms on touch devices */
+  }
+}
+
+/* Better spacing in contextual container */
+.contextual-input-container .segmented-control {
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 480px) {
+  .contextual-input-container .segmented-control {
+    margin-bottom: 0.5rem;
+  }
+}

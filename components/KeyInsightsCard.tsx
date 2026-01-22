@@ -3,6 +3,36 @@ import type { UserData } from '../types';
 import { t } from '../locales';
 import { getPrimaryInsights } from '../services/shareService';
 
+// Helper function to get emoji icon based on key
+const getEmojiIcon = (key: string): string => {
+  switch(key) {
+    case 'activity':
+    case 'no_smoking':
+    case 'low_salt':
+    case 'no_alcohol':
+    case 'healthy_bmi':
+      return '👍'; // Thumbs Up - For positive findings
+    case 'Smoking':
+      return '🚭'; // No Smoking - For smoking
+    case 'Weight':
+      return '⚖️'; // Scale - For weight issues
+    case 'Waist':
+      return '⭕'; // Circle - For waist circumference
+    case 'Sedentary':
+      return '🪑'; // Chair - For sedentary lifestyle
+    case 'Alcohol':
+      return '🍺'; // Beer - For alcohol
+    case 'Salt':
+      return '🧂'; // Salt - For salt intake
+    case 'Dna':
+      return '🧬'; // DNA - For family history
+    case 'Biomass':
+      return '🔥'; // Fire - For biomass fuel
+    default:
+      return '⚫'; // Default circle
+  }
+};
+
 interface KeyInsightsCardProps {
   userData: UserData;
   cbacScore: number;
@@ -58,18 +88,18 @@ const KeyInsightsCard: React.FC<KeyInsightsCardProps> = ({ userData, cbacScore }
               <>
                 {focusArea1 && (
                   <FocusItem label={focusArea1.label}>
-                    {focusArea1.Icon}
+                    <span style={{ fontSize: '22px' }}>{getEmojiIcon(focusArea1.key)}</span>
                   </FocusItem>
                 )}
                 {focusArea2 && (
                   <FocusItem label={focusArea2.label}>
-                    {focusArea2.Icon}
+                    <span style={{ fontSize: '22px' }}>{getEmojiIcon(focusArea2.key)}</span>
                   </FocusItem>
                 )}
               </>
             ) : (
               <FocusItem label="Maintain Healthy Lifestyle">
-                <CheckIcon />
+                <span style={{ fontSize: '22px' }}>👍</span>
               </FocusItem>
             )}
           </div>
@@ -91,13 +121,4 @@ const FocusItem: React.FC<{ label: string; children: React.ReactNode }> = ({
     <div className="focus-icon">{children}</div>
     <span className="focus-label">{label}</span>
   </div>
-);
-
-const CheckIcon = () => (
-  <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 
-      10-4.48 10-10S17.52 2 12 2zm-2 
-      15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 
-      8l-9 9z" />
-  </svg>
 );

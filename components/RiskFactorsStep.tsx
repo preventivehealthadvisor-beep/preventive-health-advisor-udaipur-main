@@ -147,58 +147,69 @@ const RiskFactorsStep: React.FC<RiskFactorsStepProps> = ({ data, dispatch, onSub
   };
 
   return (
-    <div className="step-content">
-        <h2 className="step-header">{t('risk_factors_title')}</h2>
-        <p className="step-subheader">{t('risk_factors_subtitle')}</p>
+    <div className="step-content risk-factors-step">
+        <div className="step-header-section">
+            <h2 className="step-header">{t('risk_factors_title')}</h2>
+            <p className="step-subheader">{t('risk_factors_subtitle')}</p>
+        </div>
         
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+        <div className="risk-factors-container">
             
+            {/* Infectious Diseases Section */}
             <div className="risk-factor-section inset">
-                <h4 style={{ marginBottom: '1rem', color: 'var(--text-main)', fontWeight: '700' }}>{t('infectious_label')}</h4>
-                <RadioGroup
-                    label={t('hepatitis_label')}
-                    options={radioOptions.hepatitis}
-                    selectedValue={data.hepatitisHistory}
-                    onChange={(val) => {
-                        dispatch({type: 'UPDATE_FIELD', field: 'hepatitisHistory', value: val});
-                        if (val !== 'none') triggerRiskAnimation(`hep-${val}`, 'high');
-                    }}
-                    getAnimationClass={(val) => animatedRisk.id === `hep-${val}` && val !== 'none' ? `risk-glow-high` : ''}
-                    gridColumns={2}
-                />
-                <RadioGroup
-                    label={t('hpv_vaccine_label')}
-                    options={radioOptions.hpv}
-                    selectedValue={data.hpvVaccineStatus}
-                    onChange={(val) => dispatch({type: 'UPDATE_FIELD', field: 'hpvVaccineStatus', value: val})}
-                    gridColumns={3}
-                />
+                <h4 className="section-title">{t('infectious_label')}</h4>
+                <div className="radio-section">
+                    <RadioGroup
+                        label={t('hepatitis_label')}
+                        options={radioOptions.hepatitis}
+                        selectedValue={data.hepatitisHistory}
+                        onChange={(val) => {
+                            dispatch({type: 'UPDATE_FIELD', field: 'hepatitisHistory', value: val});
+                            if (val !== 'none') triggerRiskAnimation(`hep-${val}`, 'high');
+                        }}
+                        getAnimationClass={(val) => animatedRisk.id === `hep-${val}` && val !== 'none' ? `risk-glow-high` : ''}
+                        gridColumns={2}
+                    />
+                </div>
+                <div className="radio-section">
+                    <RadioGroup
+                        label={t('hpv_vaccine_label')}
+                        options={radioOptions.hpv}
+                        selectedValue={data.hpvVaccineStatus}
+                        onChange={(val) => dispatch({type: 'UPDATE_FIELD', field: 'hpvVaccineStatus', value: val})}
+                        gridColumns={3}
+                    />
+                </div>
             </div>
 
-            <div className="recommendation-card accent-risk">
-                <div style={{ flex: 1 }}>
-                    <h3 style={{ fontSize: '1.1rem', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            {/* Marble Mining Exposure */}
+            <div className="recommendation-card accent-risk marble-mining-card">
+                <div className="card-content">
+                    <h3 className="card-title">
                         {t('marble_mining_label')}
                         <InfoIcon tooltip={t('mining_tooltip')} />
                     </h3>
-                    <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', margin: 0 }}>{t('marble_mining_desc')}</p>
+                    <p className="card-description">{t('marble_mining_desc')}</p>
                 </div>
-                <ToggleButton 
-                    value={!!data.marbleMiningExposure} 
-                    onChange={(val) => dispatch({type: 'UPDATE_FIELD', field: 'marbleMiningExposure', value: val})}
-                    onToggle={() => {
-                        triggerHapticFeedback();
-                        if (!data.marbleMiningExposure) triggerRiskAnimation('marble-mining', 'high');
-                    }}
-                    className={animatedRisk.id === 'marble-mining' ? `risk-glow-${animatedRisk.level}` : ''} 
-                />
+                <div className="card-toggle">
+                    <ToggleButton 
+                        value={!!data.marbleMiningExposure} 
+                        onChange={(val) => dispatch({type: 'UPDATE_FIELD', field: 'marbleMiningExposure', value: val})}
+                        onToggle={() => {
+                            triggerHapticFeedback();
+                            if (!data.marbleMiningExposure) triggerRiskAnimation('marble-mining', 'high');
+                        }}
+                        className={animatedRisk.id === 'marble-mining' ? `risk-glow-${animatedRisk.level}` : ''} 
+                    />
+                </div>
             </div>
 
-            <div className="risk-factor-section">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                    <legend className="form-label" style={{ marginBottom: 0 }}>{t('family_history_label')}</legend>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t('family_history_unsure_label')}</label>
+            {/* Family History Section */}
+            <div className="risk-factor-section family-history-section">
+                <div className="section-header">
+                    <legend className="form-label section-title">{t('family_history_label')}</legend>
+                    <div className="unsure-toggle">
+                        <label className="unsure-label">{t('family_history_unsure_label')}</label>
                         <ToggleButton 
                             value={!!data.familyHistoryUnsure} 
                             onChange={handleUnsureToggle}
@@ -206,15 +217,15 @@ const RiskFactorsStep: React.FC<RiskFactorsStepProps> = ({ data, dispatch, onSub
                         />
                     </div>
                 </div>
-                <fieldset disabled={data.familyHistoryUnsure}>
+                <fieldset disabled={data.familyHistoryUnsure} className="family-history-fieldset">
                     {Object.entries(FAMILY_HISTORY_OPTIONS).map(([category, options]) => {
                         const categoryKey = generateTranslationKey(category);
                         return (
                         <details key={category} className="collapsible-section" open>
-                            <summary>{t(categoryKey)}</summary>
+                            <summary className="category-summary">{t(categoryKey)}</summary>
                             <div className="accordion-content-wrapper">
                                 <div className="accordion-content">
-                                    <div className="checkbox-group" style={{ padding: '0.5rem 0' }}>
+                                    <div className="checkbox-group family-history-grid">
                                         {options.map(option => {
                                             const isCancer = CANCER_HISTORY_OPTIONS.includes(option);
                                             const currentSelection = data.familyHistory.find(item => item.condition === option);
@@ -252,8 +263,7 @@ const RiskFactorsStep: React.FC<RiskFactorsStepProps> = ({ data, dispatch, onSub
                                                                 min="1"
                                                                 max="120"
                                                                 onChange={(e) => handleFamilyHistoryAgeChange(option, e.target.value ? parseInt(e.target.value) : undefined)} 
-                                                                className={`form-input ${isAgeInvalid ? 'error' : ''}`} 
-                                                                style={{ padding: '0.6rem', fontSize: '0.9rem', textAlign: 'center', marginTop: '0.5rem' }} 
+                                                                className={`form-input age-input ${isAgeInvalid ? 'error' : ''}`}
                                                             />
                                                         )}
                                                     </div>
@@ -269,9 +279,10 @@ const RiskFactorsStep: React.FC<RiskFactorsStepProps> = ({ data, dispatch, onSub
                 </fieldset>
             </div>
 
-            <div className="risk-factor-section">
-                <legend className="form-label">{t('personal_conditions_label')}</legend>
-                <div className="checkbox-group">
+            {/* Personal Conditions Section */}
+            <div className="risk-factor-section personal-conditions-section">
+                <legend className="form-label section-title">{t('personal_conditions_label')}</legend>
+                <div className="checkbox-group personal-conditions-grid">
                     {Object.values(PERSONAL_CONDITIONS_OPTIONS).flat().map(option => {
                         const optionKey = generateTranslationKey(option);
                         const isSelected = data.personalConditions.includes(option);

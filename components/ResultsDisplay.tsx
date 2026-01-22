@@ -222,7 +222,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, onReset, userD
   };
 
   const details = selectedRec ? getRecommendationDetails(selectedRec.key) : [];
-  const packYears = ((userData.smokingPacksPerDay || 0) * (userData.smokingYears || 0));
+  const packYears = (((userData.smokingSticksPerDay || 0) / 20) * (userData.smokingYears || 0));
 
   // READER MODE VIEW
   if (selectedRec) {

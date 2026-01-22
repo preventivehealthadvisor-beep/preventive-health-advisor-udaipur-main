@@ -16,10 +16,9 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({ value, onChange, className,
             role="switch"
             aria-checked={value}
             onClick={() => { onChange(!value); onToggle(); }} 
-            className={`radio-label ${value ? 'selected' : ''} ${className}`} 
-            style={{ width: '80px', padding: '0.5rem' }}
+            className={`toggle-button ${value ? 'selected' : ''} ${className || ''}`}
         >
-            {value ? t('yes') : t('no')}
+            <span className="toggle-text">{value ? t('yes') : t('no')}</span>
         </button>
     );
 };
